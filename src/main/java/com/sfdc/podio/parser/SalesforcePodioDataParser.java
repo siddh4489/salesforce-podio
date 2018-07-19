@@ -19,17 +19,10 @@ public class SalesforcePodioDataParser {
         SalesforcePodioItemModel modelObj = new SalesforcePodioItemModel();
         JsonParser jsonParser = new JsonParser();
         JsonObject object = jsonParser.parse(jsonData).getAsJsonObject();
-        fieldList.add(new FieldValuesUpdate("title", "value", (modelObj.getTitle() != null && modelObj.getTitle() != "" ? modelObj.getTitle() : " ")));
-        fieldList.add(new FieldValuesUpdate("name", "value", (modelObj.getName() != null && modelObj.getName() != "" ? modelObj.getName() : " ")));
-        fieldList.add(new FieldValuesUpdate("salesforce-id", "value", (modelObj.getSfdcid() != null && modelObj.getSfdcid() != "" ? modelObj.getSfdcid() : " ")));
+        modelObj.setTitle(object.get("title").toString().replace("\""," "));
+        modelObj.setName(object.get("name").toString().replace("\""," "));
         return modelObj;
     }
 
-    public static void main(String[] args) {
-        String jsonString = "{\"title\":\"Sergey\",\"name\":\"Kargopolov\"}";
-
-        JsonParser jsonParser = new JsonParser();
-        JsonObject objectFromString = jsonParser.parse(jsonString).getAsJsonObject();
-        System.out.println("====>" + objectFromString.get("title1"));
-    }
+   
 }
