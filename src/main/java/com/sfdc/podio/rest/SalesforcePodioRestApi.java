@@ -53,7 +53,7 @@ public class SalesforcePodioRestApi {
             itemref = SalesforcePodioOperation.newProperty(SalesforcePodioOperation.getApplicationId("Test App"), SalesforcePodioDataParser.jsonToObject(data));
             System.out.println("Created Property itemid : "+itemref);
         }
-        return Response.status(201).entity(itemref).build();
+        return Response.status(201).entity(itemref.toString()).build();
     }
     
 }
