@@ -39,15 +39,21 @@ public class SalesforcePodioRestApi {
 
     @POST
     @Path("/newProperty")
-    public Response someMethod(String data, @HeaderParam("itemId") Integer itemId) {
-        //data = "{\"title\":\"Sergey\",\"name\":\"Kargopolov\"}";
+    public Response newProperty(String data, @HeaderParam("itemId") Integer itemId) {
         Integer itemref = null;
+        System.out.println(" data : "+data);
+        System.out.println(" itemId : "+itemId);
+        System.out.println(" called method : newProperty ");
         if (SalesforcePodioOperation.existingPropertyCheck(itemId)) {
-            SalesforcePodioOperation.updateProperty(itemId, SalesforcePodioDataParser.jsonToObject(data));
+            System.out.println(" In  : Update Property ");
+            boolean checkUpdate = SalesforcePodioOperation.updateProperty(itemId, SalesforcePodioDataParser.jsonToObject(data));
+            System.out.println(" Update Property Status :"+checkUpdate);
         } else {
+            System.out.println(" In : New Property");
             itemref = SalesforcePodioOperation.newProperty(SalesforcePodioOperation.getApplicationId("Test App"), SalesforcePodioDataParser.jsonToObject(data));
+            System.out.println("Created Property itemid : "+itemref);
         }
         return Response.status(201).entity(itemref).build();
     }
-
+    
 }
