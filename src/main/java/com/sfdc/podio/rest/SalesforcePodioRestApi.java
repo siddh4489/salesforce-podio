@@ -40,7 +40,7 @@ public class SalesforcePodioRestApi {
     @POST
     @Path("/newProperty")
     public Response newProperty(String data, @HeaderParam("itemId") Integer itemId) {
-        Integer itemref = null;
+        String itemref = "";
         System.out.println(" data : "+data);
         System.out.println(" itemId : "+itemId);
         System.out.println(" called method : newProperty ");
@@ -48,12 +48,18 @@ public class SalesforcePodioRestApi {
             System.out.println(" In  : Update Property ");
             boolean checkUpdate = SalesforcePodioOperation.updateProperty(itemId, SalesforcePodioDataParser.jsonToObject(data));
             System.out.println(" Update Property Status :"+checkUpdate);
+            if(checkUpdate){
+                itemref = "Updated Successfully";
+            }else{
+                itemref = "Update Failed";
+            }
         } else {
             System.out.println(" In : New Property");
-            itemref = SalesforcePodioOperation.newProperty(SalesforcePodioOperation.getApplicationId("Test App"), SalesforcePodioDataParser.jsonToObject(data));
+            itemref = SalesforcePodioOperation.newProperty(SalesforcePodioOperation.getApplicationId("Test App"), SalesforcePodioDataParser.jsonToObject(data)).toString();
             System.out.println("Created Property itemid : "+itemref);
+            itemref = "Created Property ItemId '"+itemref+"'";
         }
-        return Response.status(201).entity(itemref.toString()).build();
+        return Response.status(201).entity("Status : "+itemref.toString()).build();
     }
     
 }
